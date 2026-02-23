@@ -5,7 +5,9 @@ pipeline {
 
         stage('Build Backend Image') {
             steps {
-                sh 'docker build -t backend-app backend'
+                sh '''
+                docker build -t backend-app backend
+                '''
             }
         }
 
@@ -25,7 +27,7 @@ pipeline {
                 docker rm -f nginx-lb || true
                 docker run -d --name nginx-lb \
                     -p 80:80 \
-                    -v $(pwd)/nginx/default.conf:/etc/nginx/conf.d/default.conf \
+                    -v $(pwd)/nginx:/etc/nginx/conf.d \
                     nginx
                 '''
             }
